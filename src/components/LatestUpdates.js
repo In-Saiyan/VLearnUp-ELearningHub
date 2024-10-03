@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
 const apiKey = ''; // Replace with your NewsAPI key
-const url = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+const url = `https://newsapi.org/v2/top-headlines?category=technology&apiKey=${apiKey}`;
 
 const LatestUpdates = ({ className = "" }) => {
   const [articles, setArticles] = useState([]);
@@ -48,22 +48,24 @@ const LatestUpdates = ({ className = "" }) => {
         </div>
 
         {/* Main container: two divs side by side */}
-        <div className="self-stretch flex flex-row items-start justify-between gap-[151px] max-w-full text-xl text-white font-poppins mq450:gap-[19px] mq850:gap-[38px] mq1225:gap-[75px] mq1500:flex-wrap">
+        <div className="self-stretch flex flex-row items-start justify-between gap-[30px] max-w-full text-xl text-white font-poppins mq450:gap-[15px] mq850:gap-[20px] mq1225:gap-[30px] mq1500:flex-wrap">
           
           {/* First Div: Big article (vertical flex layout) */}
           <div className="w-[609px] flex flex-col items-start justify-start gap-[47px] min-w-[609px] max-w-full mq850:gap-[23px] mq850:min-w-full mq1500:flex-1">
             {articles[0] && (
-              <div className="self-stretch flex flex-col items-start justify-start gap-[20px]">
-                <img
-                  className="self-stretch h-[333px] relative rounded-xl max-w-full overflow-hidden shrink-0 object-cover"
-                  loading="lazy"
-                  alt=""
-                  src={articles[0].urlToImage || "/image-16@2x.png"} // Use article image or fallback
-                />
-                <div className="rounded-61xl bg-lightseagreen flex flex-row items-start justify-start py-0.5 pr-[34px] pl-[35px]">
-                  <b className="relative tracking-[0.02em] leading-[180%] inline-block min-w-[61px] z-[1] mq450:text-base mq450:leading-[29px]">
-                    {articles[0].source.name || "NEWS"}
-                  </b>
+              <div className="self-stretch flex flex-col items-start justify-start gap-[20px] relative">
+                {/* Image with overlaid pill-shaped source name */}
+                <div className="relative w-full h-[333px]">
+                  <img
+                    className="self-stretch h-[333px] rounded-xl object-cover"
+                    loading="lazy"
+                    alt=""
+                    src={articles[0].urlToImage || "/image-16@2x.png"} // Use article image or fallback
+                  />
+                  {/* Pill-shaped Source name overlay */}
+                  <div className="absolute bottom-3 left-3 bg-lightseagreen py-1 px-3 rounded-full text-sm">
+                    <b>{articles[0].source.name || "NEWS"}</b>
+                  </div>
                 </div>
                 <b className="self-stretch relative text-7xl leading-[180%] text-gray-100 mq450:text-2xl mq450:leading-[37px]">
                   {articles[0].title}
@@ -81,18 +83,21 @@ const LatestUpdates = ({ className = "" }) => {
           </div>
 
           {/* Second Div: Three smaller articles (vertical flex layout) */}
-          <div className="w-[609px] flex flex-col gap-[47px] max-w-full">
+          <div className="w-[609px] flex flex-col gap-[20px] max-w-full">
             {articles.slice(1, 4).map((article, index) => (
-              <div key={index} className="flex flex-row items-start gap-[20px] min-w-[250px] max-w-full mq850:gap-[23px] mq850:min-w-full mq1500:flex-1">
+              <div key={index} className="flex flex-row items-start gap-[20px] min-w-[250px] max-w-full mq850:gap-[23px] mq850:min-w-full mq1500:flex-1 relative">
                 
-                {/* Left: Thumbnail */}
-                <div className="w-[120px] h-[120px] flex-shrink-0">
+                {/* Left: Thumbnail with overlaid pill-shaped source name */}
+                <div className="relative w-[210px] h-[118px] flex-shrink-0 image-container">
                   <img
                     className="w-full h-full rounded-xl object-cover"
                     loading="lazy"
                     alt=""
-                    src={article.urlToImage || "/image-16@2x.png"} // Use article image or fallback
+                    src={article.urlToImage || "/image-16@2x.png"}
                   />
+                  <div className="absolute bottom-2 left-2 bg-lightseagreen py-1 px-3 rounded-full text-sm">
+                    <b>{article.source.name || "NEWS"}</b>
+                  </div>
                 </div>
                 
                 {/* Right: Title and description */}
@@ -100,7 +105,9 @@ const LatestUpdates = ({ className = "" }) => {
                   <b className="text-3xl leading-[180%] text-gray-100 mq450:text-2xl mq450:leading-[37px]">
                     {article.title}
                   </b>
-                  <p className="text-xl leading-[180%] text-slategray-100 mq450:text-base mq450:leading-[29px]">
+                  {/* Description with line limit */}
+                  <p className="text-xl leading-[180%] text-slategray-100 mq450:text-base mq450:leading-[29px] overflow-hidden overflow-ellipsis whitespace-nowrap" 
+                    style={{ display: '-webkit-box', WebkitBoxOrient: 'vertical', WebkitLineClamp: 2 }}>
                     {article.description}
                   </p>
                   <b className="relative [text-decoration:underline] tracking-[0.02em] leading-[180%] inline-block min-w-[116px] z-[1] mt-[-28px] mq450:text-base mq450:leading-[29px]">
@@ -122,3 +129,4 @@ LatestUpdates.propTypes = {
 };
 
 export default LatestUpdates;
+``
