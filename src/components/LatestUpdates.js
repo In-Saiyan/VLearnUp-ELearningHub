@@ -35,9 +35,9 @@ const LatestUpdates = forwardRef(({ className = "" }, ref) => {
 
     const intervalId = setInterval(() => {
       fetchArticles(); // Fetch articles every 5 minutes
-    }, 300000); // 2 minutes in milliseconds
+    }, 300000); // 5 minutes in milliseconds
 
-    return () => clearInterval(intervalId); // Cleanup the interval on component unmount
+    return () => clearInterval(intervalId); // Cleanup the interval on component unmount 
   }, []);
   const truncateTitle = (title) => {
     if (title.length > 74) {
@@ -101,11 +101,7 @@ return (
               <b className="self-stretch relative tracking-[0.02em] leading-[180%] mq450:text-base mq450:leading-[29px]">
                 {articles[0].description}
               </b>
-              <b className="relative [text-decoration:underline] tracking-[0.02em] leading-[180%] inline-block min-w-[116px] z-[1] mt-[-28px] mq450:text-base mq450:leading-[29px] bottom mt-4">
-                <a href={articles[0].url}>
-                  Read More...
-                </a>
-              </b>
+              {/* Removed read more */}
             </div>
           </div>
         </div>
@@ -142,7 +138,7 @@ return (
                   className="absolute h-full w-full top-[0px] right-[0px] bottom-[0px] left-[0px] rounded-xl max-w-full overflow-hidden max-h-full object-cover z-[2]"
                   loading="lazy"
                   alt=""
-                  src="/image-18@2x.png"
+                  src={articles[2].urlToImage}
                 />
               </div>
               <div className="rounded-61xl bg-lightseagreen flex flex-row items-start justify-start pt-1 pb-[3px] pr-[19px] pl-[26px] z-[3]">
